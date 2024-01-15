@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\HTTp\Requests\CreateUserRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
@@ -12,7 +14,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        $users = User::all();
+        return response()->json($users);
     }
 
     /**
@@ -20,8 +23,9 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
     }
+
 
     /**
      * Display the specified resource.
