@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\NewUserRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -37,9 +38,11 @@ class UserController extends Controller
             'email.email' => 'Érvénytelen e-mail cím',
             'email.unique' => 'A megadott e-mail cím már foglalt',
             'password.required' => 'Jelszó megadása kötelező',
+            'password.string' => 'A jelszónak karaktereket kell tartalmaznia',
             'password.min' => 'A jelszónak legalább 8 karakterből kell állnia',
             'password.regex' => 'A jelszónak legalább egy nagybetűt és egy számot kell tartalmaznia'
         ];
+
 
         $validator = Validator::make($data, $rules, $messages);
 
@@ -47,7 +50,7 @@ class UserController extends Controller
             $errors = $validator->errors();
             return response ()->json($errors, 400);
         } else {
-            $pw['password'] = bcrypt($request->password);
+            $data['password'] = bcrypt($request->password);
             $user = User::create($data);
             return response()->json($user, 201);
     }
@@ -62,9 +65,8 @@ class UserController extends Controller
     {
         $user = User::find($user->id);
         if ($user == null) {
-            return response()->json([
-                "message" => "User not found"
-            ], 404);
+
+            return response()->json(['message' => 'Nincs ilyen felhasználó'], 404);
         } else {
             return response()->json($user);
         }
@@ -75,15 +77,42 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
+        $data = $request->all();
+
+        $rules = [
+            'username' =>'required|unique:users|min:6',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|string|min:8|regex:/^(?=.*[A-Z])(?=.*[0-9])/'
+        ];
+        $messages = [
+            'username.required' => 'Felhasználónév megadása kötelező',
+            'username.unique' => 'A megadott felhasználónév már foglalt',
+            'username.min' => 'A felhasználónév legalább 6 karakter hosszú kell legyen',
+            'email.required' => 'E-mail cím megadása kötelező',
+            'email.email' => 'Érvénytelen e-mail cím',
+            'email.unique' => 'A megadott e-mail cím már foglalt',
+            'password.required' => 'Jelszó megadása kötelező',
+            'password.string' => 'A jelszónak karaktereket kell tartalmaznia',
+            'password.min' => 'A jelszónak legalább 8 karakterből kell állnia',
+            'password.regex' => 'A jelszónak legalább egy nagybetűt és egy számot kell tartalmaznia'
+        ];
+
         $user = User::find($user->id);
-        if ($user == null) {
-            return response()->json([
-                "message" => "User not found"
-            ], 404);
+        if (!$user) {
+
+            return response()->json(['message' => 'Nincs ilyen felhasználó'], 404);
+        } else{
+            $validator = Validator::make($data, $rules, $messages);
+
+        if ($validator->fails()) {
+            $errors = $validator->errors();
+            return response ()->json($errors, 400);
+        } else {
+            $request['password'] = bcrypt($request->password);
+            $user->update($request->all());
+            return response()->json($user, 200);
+    }
         }
-
-
-
     }
 
     /**
@@ -91,6 +120,13 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        //
+        $user = User::find($user->id);
+
+        if (!$user) {
+            return response()->json(['message'=> 'No student found'], 404);
+        } else {
+            $user->delete();
+            return response()->json(["message" => "Felhasználó törölve"], 200);
+        }
     }
 }
