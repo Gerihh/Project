@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\HTTp\Requests\CreateUserRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use function Laravel\Prompts\error;
 
 class UserController extends Controller
 {
@@ -27,12 +27,20 @@ class UserController extends Controller
     }
 
 
+
     /**
      * Display the specified resource.
      */
     public function show(User $user)
     {
-        //
+        $user = User::find($user->id);
+        if ($user == null) {
+            return response()->json([
+                "message" => "User not found"
+            ], 404);
+        } else {
+            return response()->json($user);
+        }
     }
 
     /**
@@ -40,7 +48,15 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        //
+        $user = User::find($user->id);
+        if ($user == null) {
+            return response()->json([
+                "message" => "User not found"
+            ], 404);
+        }
+
+
+
     }
 
     /**
