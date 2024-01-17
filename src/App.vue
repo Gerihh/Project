@@ -1,11 +1,7 @@
-<template>
-  <router-view />
-</template>
-
-<script>
-import { defineComponent } from 'vue'
-
-export default defineComponent({
-  name: 'App'
-})
+<script setup>
+import ExampleComponent from "components/ExampleComponent.vue";
 </script>
+
+<template>
+  <ExampleComponent />
+</template>
