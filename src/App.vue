@@ -1,7 +1,5 @@
-<script setup>
-import ExampleComponent from "components/ExampleComponent.vue";
-</script>
+<script setup></script>
 
 <template>
-  <ExampleComponent />
+  <router-view />
 </template>
