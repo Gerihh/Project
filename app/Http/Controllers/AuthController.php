@@ -40,11 +40,8 @@ class AuthController extends Controller
             $errors = $validator->errors();
             return response ()->json($errors, 400);
         } else { //User létrehozása
-           $user = User::create([
-            'username' => $data['username'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
-           ]);
+            $data['password'] = bcrypt($request->password);
+            $user = User::create($data);
     }
         //Token kreálás
         $token = $user->createToken('authToken')->accessToken;
