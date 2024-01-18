@@ -3,7 +3,7 @@
 <template>
   <q-layout>
     <div class="q-pa-md">
-      <q-toolbar class="bg-purple text-white shadow-2 rounded-borders">
+      <q-toolbar class="bg-light-green text-white shadow-2 rounded-borders">
         <q-btn flat label="Főoldal" to="/" />
         <q-space />
         <q-tabs v-model="tab" shrink>
