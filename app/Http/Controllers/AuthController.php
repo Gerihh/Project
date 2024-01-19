@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\NewUserRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -9,12 +10,12 @@ use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
-    public function register(Request $request)
+    public function register(NewUserRequest $request)
     {
         //Validálás
-        $data = $request->all();
+        //$data = $request->only(['username', 'email', 'password']);
 
-        $rules = [
+        /*$rules = [
             'username' =>'required|unique:users|min:6',
             'email' => 'required|email|unique:users',
             'password' => 'required|string|min:8|regex:/^(?=.*[A-Z])(?=.*[0-9])/'
@@ -30,19 +31,24 @@ class AuthController extends Controller
             'password.string' => 'A jelszónak karaktereket kell tartalmaznia',
             'password.min' => 'A jelszónak legalább 8 karakterből kell állnia',
             'password.regex' => 'A jelszónak legalább egy nagybetűt és egy számot kell tartalmaznia'
-        ];
+        ];*/
 
 
-        $validator = Validator::make($data, $rules, $messages);
+        //$validator = Validator::make($data, $rules, $messages);
 
         //Validálás check
-        if ($validator->fails()) {
-            $errors = $validator->errors();
+        /*if ($request->validated()->fails()) {
+            $errors = $request->validated();
             return response ()->json($errors, 400);
         } else { //User létrehozása
             $data['password'] = bcrypt($request->password);
             $user = User::create($data);
-    }
+    }*/
+
+        $data = $request->validated();
+        $data['password'] = bcrypt($request->password);
+        $user = User::create($data);
+
         //Token kreálás
         $token = $user->createToken('authToken')->accessToken;
 
