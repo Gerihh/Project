@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\LoginUserRequest;
 use App\Http\Requests\NewUserRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
@@ -26,15 +26,34 @@ class AuthController extends Controller
             'accessToken' => $token,
         ]);
     }
-    public function login(Request $request)
+    public function login(LoginUserRequest $request)
     {
+        //Validálás
+        $data = $request->validated();
+
+        //Autentikáció
+        if (Auth::attempt($data)) {
+            // Authenticated user
+            $user = Auth::user();
+
+            //Token
+            $token = $user->createToken('authToken')->accessToken;
+
+            return response()->json([
+                'user' => $user,
+                'accessToken' => $token,
+            ]);
+        }
+
+        //Autentikációs hiba
+        return response()->json(['error' => 'Hibás bejelentkezés'], 401);
 
     }
+
+
     public function logout()
     {
-        Auth::logout();
 
-        return response()->json(['message' => 'Successfully logged out']);
     }
     public function refresh()
     {
@@ -42,8 +61,6 @@ class AuthController extends Controller
     }
     public function user()
     {
-        $user = Auth::user();
 
-        return response()->json($user);
     }
 }
