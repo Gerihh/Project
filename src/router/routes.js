@@ -8,9 +8,13 @@ const routes = [
         component: () => import("pages/IndexPage.vue"),
       },
       {
-        path: "login",
+        path: "register",
         component: () => import("pages/RegisterPage.vue"),
       },
+      {
+        path: "login",
+        component: () => import("pages/LoginPage.vue"),
+      }
     ],
   },
 

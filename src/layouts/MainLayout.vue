@@ -9,7 +9,7 @@
         <q-tabs v-model="tab" shrink>
           <q-route-tab label="X" to="/x" />
           <q-route-tab label="Y" to="/y" />
-          <q-route-tab label="Bejelentkezés" to="/login" />
+          <q-route-tab label="Regisztráció / Bejelentkezés" to="/register" />
         </q-tabs>
       </q-toolbar>
     </div>

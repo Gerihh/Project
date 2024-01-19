@@ -10,7 +10,7 @@
                   </q-card-section>
                 </q-form>
               <q-card-section class="text-center q-pa-none">
-                <p class="text-grey-8">Van már felhasználód? Jelentkezz be itt!</p>
+                <p class="text-grey-8">Van már felhasználód? <router-link to="/login">Jelentkezz be itt!</router-link></p>
               </q-card-section>
             </q-card>
     </div>
@@ -40,6 +40,9 @@ export default {
         //Token és User elmentése
         localStorage.setItem('token', response.data.accessToken);
         localStorage.setItem('user', JSON.stringify(response.data.user));
+
+        this.$router.push('/login');
+        console.log('Sikeres regisztráció');
       } catch (error) {
         console.error('Hibás regisztráció:', error);
       }
