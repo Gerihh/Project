@@ -41,10 +41,14 @@ export default {
         localStorage.setItem('token', response.data.accessToken);
         localStorage.setItem('user', JSON.stringify(response.data.user));
 
-        this.$router.push('/login');
+        this.$router.push('/');
         console.log('Sikeres regisztráció');
       } catch (error) {
         console.error('Hibás regisztráció:', error);
+        window.alert('Hibás adatok!')
+        this.email = '';
+        this.username = '';
+        this.password = '';
       }
     }
   }

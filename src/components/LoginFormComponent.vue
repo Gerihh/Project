@@ -39,10 +39,13 @@ methods: {
       localStorage.setItem('token', response.data.accessToken);
       localStorage.setItem('user', JSON.stringify(response.data.user));
 
-      this.$router.push('/register');
+      this.$router.push('/');
       console.log('Sikeres bejelentkezés');
     } catch (error) {
       console.error('Hibás bejelentkezés:', error);
+      window.alert('Hibás adatok!');
+      this.email = '';
+      this.password = '';
     }
   }
 }
