@@ -8,7 +8,7 @@
 <div v-else>
   <p>User not logged in</p>
 </div>
-<button @click="logout">Logout</button>
+
 </template>
 
 <script>
@@ -22,15 +22,7 @@ export default {
   mounted() {
     const storedUser = localStorage.getItem('user');
     this.user = storedUser ? JSON.parse(storedUser) : null;
+    useAuth.isLoggedIn.value = true;
   },
-  methods: {
-    logout() {
-      useAuth.isLoggedIn.value = false;
-      localStorage.removeItem('token');
-      localStorage.removeItem('user');
-      this.user = null;
-      this.$router.push('/login');
-    },
-    },
-  };
+};
 </script>

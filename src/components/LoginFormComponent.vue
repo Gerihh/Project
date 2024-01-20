@@ -43,6 +43,7 @@ methods: {
 
       this.$router.push('/profile');
       console.log('Sikeres bejelentkezés');
+
     } catch (error) {
       console.error('Hibás bejelentkezés:', error);
       window.alert('Hibás adatok!');
