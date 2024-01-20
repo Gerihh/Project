@@ -17,9 +17,9 @@ class AuthController extends Controller
         $data = $request->validated();
         $data['password'] = bcrypt($request->password);
         $user = User::create($data);
-
         //Token kreálás
         $token = $user->createToken('authToken')->accessToken;
+
 
         return response()->json([
             'user' => $user,
