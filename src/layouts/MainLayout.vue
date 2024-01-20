@@ -1,4 +1,18 @@
-<script setup></script>
+<script>
+import useAuth from 'src/composables/useAuth';
+import { ref } from 'vue';
+
+export default {
+  setup() {
+    const auth = useAuth;
+
+    return {
+      useAuth,
+      drawer: ref(false)
+    };
+  },
+};
+</script>
 
 <template>
   <q-layout>
@@ -7,15 +21,17 @@
         <q-btn flat label="Főoldal" to="/" />
         <q-space />
         <q-tabs v-model="tab" shrink>
-          <q-route-tab label="X" to="/x" />
-          <q-route-tab label="Y" to="/y" />
-          <q-route-tab label="Regisztráció / Bejelentkezés" to="/register" />
+          <q-route-tab label="X" to="/profile"/>
+          <q-route-tab label="Y" to="/a" />
+          <q-route-tab v-if="!useAuth.isLoggedIn.value" label="Regisztráció / Bejelentkezés" to="/register" />
         </q-tabs>
       </q-toolbar>
     </div>
-
     <q-page-container>
       <router-view></router-view>
     </q-page-container>
   </q-layout>
+
+
 </template>
+

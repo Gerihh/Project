@@ -18,6 +18,7 @@
 
 <script>
 import axios from 'axios';
+import useAuth from 'src/composables/useAuth';
 
 export default {
   name: 'RegisterFormComponent',
@@ -40,8 +41,9 @@ export default {
         //Token és User elmentése
         localStorage.setItem('token', response.data.accessToken);
         localStorage.setItem('user', JSON.stringify(response.data.user));
+        useAuth.isLoggedIn.value == true;
 
-        this.$router.push('/');
+        this.$router.push('/login');
         console.log('Sikeres regisztráció');
       } catch (error) {
         console.error('Hibás regisztráció:', error);

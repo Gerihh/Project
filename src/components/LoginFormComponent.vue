@@ -17,6 +17,7 @@
 
 <script>
 import axios from 'axios';
+import useAuth from 'src/composables/useAuth';
 
 export default {
 name: 'LoginFormComponent',
@@ -38,8 +39,9 @@ methods: {
       //Token és User elmentése
       localStorage.setItem('token', response.data.accessToken);
       localStorage.setItem('user', JSON.stringify(response.data.user));
+      useAuth.isLoggedIn.value = true;
 
-      this.$router.push('/');
+      this.$router.push('/profile');
       console.log('Sikeres bejelentkezés');
     } catch (error) {
       console.error('Hibás bejelentkezés:', error);
