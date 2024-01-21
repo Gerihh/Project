@@ -33,20 +33,22 @@ export default {
                 <q-route-tab label="X" to="/profile"/>
                 <q-route-tab label="Y" to="/a" />
                 <q-route-tab v-if="!useAuth.isLoggedIn.value" label="Regisztráció / Bejelentkezés" to="/register"/>
-                <q-btn v-else flat icon="mdi-account" @click="toggleDrawer = !toggleDrawer"/>
+                <q-btn v-else flat icon="menu" @click="toggleDrawer = !toggleDrawer"/>
               </q-tabs>
             </q-toolbar>
           </q-header>
       <q-drawer v-model="toggleDrawer" elevated side="right">
       <q-tabs inline-tabs vertical>
-        <q-route-tab to="/profile" label="Profil" />
+        <q-route-tab to="/profile" label="Profil" @click="toggleDrawer = !toggleDrawer" />
         <q-route-tab
           href="https://vuejs.org/"
           label="Vue.JS"
           no-caps
           target="_blank"
         />
-        <q-btn label="Kijelentkezés" color="red" @click="logout"/>
+        <q-item class="justify-center">
+          <q-btn label="Kijelentkezés" color="red" @click="logout"/>
+        </q-item>
         </q-tabs>
       </q-drawer>
     </div>

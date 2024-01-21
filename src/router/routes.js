@@ -15,12 +15,19 @@ const routes = [
         path: "login",
         component: () => import("pages/LoginPage.vue"),
       },
-      {
-        path: "profile",
-        component: () => import("pages/UserProfilePage.vue"),
-      },
-    ],
+    ]
   },
+  {
+    path: "/profile",
+    component: () => import("layouts/ProfileDashboardLayout.vue"),
+    children: [
+      {
+        path: "personal",
+        component: () => import("pages/ProfilePersonalPage.vue"),
+      },
+    ]
+  },
+
 
   // Always leave this as last one,
   // but you can also remove it
