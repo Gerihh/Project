@@ -47,7 +47,6 @@ export default {
         console.log('Sikeres regisztráció');
       } catch (error) {
         console.error('Hibás regisztráció:', error);
-        window.alert('Hibás adatok!')
         this.email = '';
         this.username = '';
         this.password = '';

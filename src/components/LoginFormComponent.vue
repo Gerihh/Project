@@ -41,7 +41,7 @@ methods: {
       localStorage.setItem('user', JSON.stringify(response.data.user));
       useAuth.isLoggedIn.value = true;
 
-      this.$router.push('/profile');
+      this.$router.push('/');
       console.log('Sikeres bejelentkezés');
 
     } catch (error) {
