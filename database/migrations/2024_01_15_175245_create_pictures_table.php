@@ -16,8 +16,8 @@ return new class extends Migration
             $table->string('url');
             $table->string('description')->nullable();
             $table->timestamp('timestamp');
-            $table->foreignId('creatorId')->references('id')->on('users');
-            $table->foreignId('eventId')->references('id')->on('events');
+            $table->foreignId('creatorId')->references('id')->on('users')->onDelete('cascade');
+            $table->foreignId('eventId')->references('id')->on('events')->onDelete('cascade');
         });
     }
 

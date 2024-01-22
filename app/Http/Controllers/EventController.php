@@ -12,7 +12,8 @@ class EventController extends Controller
      */
     public function index()
     {
-        //
+        $events = Event::all();
+        return response()->json($events);
     }
 
     /**
@@ -20,7 +21,8 @@ class EventController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $event = Event::create($request->all());
+        return response()->json($event);
     }
 
     /**
@@ -28,7 +30,12 @@ class EventController extends Controller
      */
     public function show(Event $event)
     {
-        //
+        $event = Event::find($event->id);
+        if ($event == null) {
+            return response()->json(['message' => 'Nincs ilyen esemény'], 404);
+        } else {
+            return response()->json($event);
+        }
     }
 
     /**
@@ -36,7 +43,14 @@ class EventController extends Controller
      */
     public function update(Request $request, Event $event)
     {
-        //
+        $event = Event::find($event->id);
+        if ($event == null) {
+            return response()->json(['message' => 'Nincs ilyen esemény'], 404);
+        } else {
+            $event->update($request->all());
+            return response()->json($event);
+        }
+
     }
 
     /**
@@ -44,6 +58,13 @@ class EventController extends Controller
      */
     public function destroy(Event $event)
     {
-        //
+        $event = Event::find($event->id);
+
+        if ($event == null) {
+            return response()->json(['message' => 'Nincs ilyen esemény'], 404);
+        } else {
+            $event->delete();
+            return response()->json(['message' => 'Esemény törölve'], 200);
+        }
     }
 }

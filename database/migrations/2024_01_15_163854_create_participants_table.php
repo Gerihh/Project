@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('participants', function (Blueprint $table) {
             // $table->id();
-            $table->foreignId('eventId')->references('id')->on('events');
-            $table->foreignId('userId')->references('id')->on('users');
+            $table->foreignId('eventId')->references('id')->on('events')->onDelete('cascade');
+            $table->foreignId('userId')->references('id')->on('users')->onDelete('cascade');
             $table->primary(['eventId', 'userId']);
         });
     }
