@@ -63,6 +63,7 @@
 
 <script>
 import useAuth from 'src/composables/useAuth';
+import Cookies from 'js-cookie';
 
 export default {
   data() {
@@ -71,14 +72,14 @@ export default {
     };
   },
   mounted() {
-    const storedUser = localStorage.getItem('user');
+    const storedUser = Cookies.get('user')
     this.user = storedUser ? JSON.parse(storedUser) : null;
   },
   methods: {
     logout() {
       useAuth.isLoggedIn.value = false;
-      localStorage.removeItem('token');
-      localStorage.removeItem('user');
+      Cookies.remove('token', {path: '/'});
+      Cookies.remove('user', {path: '/'});
       this.user = null;
       this.$router.push('/login');
     }

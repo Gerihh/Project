@@ -9,12 +9,14 @@
         <q-btn @click="filterReset" label="Szűrők törlése" color="red" style="margin-top: 30px; padding: 10px; width: 150px;"/>
     </div>
   </div>
-  <h2>Fetched Data:</h2>
-  <div v-if="filteredData.length > 0">
-      <ul>
-        <li v-for="item in filteredData" :key="item.id">{{ item.title }}, {{ item.location }}, {{ item.participants }}, {{ item.date }}</li>
-      </ul>
-    </div>
+  <div v-if="filteredData.length > 0" class="q-ma-lg" style="margin-top: 80px;">
+    <q-table
+        :rows="filteredData"
+        :columns="columns"
+        row-key="id"
+        class="q-mt-md"
+      />
+  </div>
 </template>
 
 <script>
@@ -28,6 +30,13 @@ export default {
       model: 0,
       date: '',
       filteredData: [],
+
+      columns: [
+        { name: 'title', label: 'Esemény neve', align: 'left', field: 'title', sortable: true, headerStyle: 'font-weight: bold; font-size: 16px;' },
+        { name: 'location', label: 'Város', align: 'left', field: 'location', sortable: true, headerStyle: 'font-weight: bold; font-size: 16px;' },
+        { name: 'participants', label: 'Résztvevők száma', align: 'left', field: 'participants', sortable: true, headerStyle: 'font-weight: bold; font-size: 16px;' },
+        { name: 'date', label: 'Dátum', align: 'left', field: 'date', sortable: true, headerStyle: 'font-weight: bold; font-size: 16px;' },
+      ],
     };
   },
 
@@ -70,7 +79,7 @@ export default {
       this.date = '';
       this.filteredData = [];
       this.searchData();
-    }
+    },
   },
 };
 </script>
