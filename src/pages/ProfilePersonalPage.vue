@@ -1,9 +1,12 @@
 <template>
-<div v-if="user">
-  <h1>Felhasználónév: {{ user.username }}</h1>
-  <h1>Email: {{ user.email }}</h1>
-  <h1>Azonosító: {{ user.id }}</h1>
-</div>
+  <div class="q-ma-lg row" v-if="user">
+    <q-card class="my-card" flat style="background-color: #fafafa;">
+        <img src="https://i.pinimg.com/474x/82/08/fe/8208fe67a521fd3fd8af5902f7292ccc.jpg" style="border-radius: 50%;"/>
+        <q-card-section>
+          <div class="text-h6 text-center">{{ user.username }} #{{user.id}}</div>
+        </q-card-section>
+      </q-card>
+  </div>
 </template>
 
 <script>
