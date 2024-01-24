@@ -17,8 +17,8 @@ return new class extends Migration
             $table->string('description')->nullable();
             $table->date('date');
             $table->string('location');
-            $table->integer('participants')->default(0);
-            $table->boolean('active')->default(true);
+            $table->integer('participants');
+            $table->boolean('active');
             $table->foreignId('creatorId')->references('id')->on('users')->onDelete('cascade');
         });
     }
