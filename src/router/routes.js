@@ -29,6 +29,10 @@ const routes = [
         path: "personal",
         component: () => import("pages/ProfilePersonalPage.vue"),
       },
+      {
+        path: "events",
+        component: () => import("pages/ProfileEventsPage.vue"),
+      },
     ]
   },
 

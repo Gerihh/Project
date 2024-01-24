@@ -30,7 +30,6 @@ export default {
       model: 0,
       date: '',
       filteredData: [],
-
       columns: [
         { name: 'title', label: 'Esemény neve', align: 'left', field: 'title', sortable: true, headerStyle: 'font-weight: bold; font-size: 16px;' },
         { name: 'location', label: 'Város', align: 'left', field: 'location', sortable: true, headerStyle: 'font-weight: bold; font-size: 16px;' },

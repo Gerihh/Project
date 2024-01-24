@@ -42,7 +42,7 @@
           </q-item>
           <q-separator inset class="q-my-sm" />
 
-          <q-item class="GNL__drawer-item" clickable to="/">
+          <q-item class="GNL__drawer-item" clickable to="/profile/events">
             <q-item-section avatar/>
             <q-item-section>
               <q-item-label>Események</q-item-label>

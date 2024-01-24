@@ -15,7 +15,7 @@ import useAuth from 'src/composables/useAuth';
 import Cookies from 'js-cookie';
 
 export default defineComponent({
-    name: "ProfilePresonalPage",
+    name: "ProfilePersonalPage",
 
     data() {
     return {
