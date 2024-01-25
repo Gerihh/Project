@@ -20,7 +20,8 @@ class ParticipantController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $participant = Participant::create($request->all());
+        return response()->json($participant, 201);
     }
 
     /**
@@ -36,7 +37,7 @@ class ParticipantController extends Controller
      */
     public function update(Request $request, Participant $participant)
     {
-        //
+
     }
 
     /**
