@@ -33,6 +33,7 @@ export default defineComponent({
       Cookies.remove('user', {path: '/'});
       this.user = null;
       this.$router.push('/login');
+      console.log(user.id)
     }
   }
 });
