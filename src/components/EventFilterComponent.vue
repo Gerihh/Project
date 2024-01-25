@@ -29,6 +29,9 @@
           <strong>Város:</strong> {{ selectedRow.location }}
         </div>
         <div class="q-mb-md">
+          <strong>Résztvevők:</strong> {{ selectedRow.participants }} fő
+        </div>
+        <div class="q-mb-md">
           <strong>Dátum:</strong> {{ selectedRow.date }}
         </div>
       </div>
@@ -36,7 +39,7 @@
     <q-card-actions class="q-gutter-sm">
       <q-btn class="q-col q-ma-md" label="Bezárás" color="red" @click="closeCard" />
         <q-space />
-      <q-btn class="q-col q-ma-md" label="Csatlakozás" color="green" />
+      <q-btn class="q-col q-ma-md" label="Csatlakozás" color="green" @click="joinEvent" />
     </q-card-actions>
   </q-card>
 </q-dialog>
@@ -44,6 +47,7 @@
 
 <script>
 import axios from 'axios';
+import Cookies from 'js-cookie';
 
 export default {
   data() {
@@ -61,6 +65,7 @@ export default {
       ],
       cardVisible: false,
       selectedRow: null,
+      userId: '',
     };
   },
 
@@ -89,9 +94,6 @@ export default {
         (this.date ? item.date === this.date : true)
       );
           });
-
-
-
       } catch (error) {
         console.error('Hiba a keresés során:', error);
       }
@@ -112,6 +114,34 @@ export default {
     closeCard() {
       this.selectedRow = null;
       this.cardVisible = false;
+    },
+    async participantJoined() {
+      const response = await axios.patch(`api/events/${this.selectedRow.id}`, {
+        participants : this.selectedRow.participants + 1,
+      });
+    },
+    async joinEvent() {
+      try {
+        const user = JSON.parse(Cookies.get('user'));
+        if (!user) {
+          alert('Nem vagy bejelentkezve!');
+          return;
+        }
+
+        this.userId = user.id
+
+        const response = await axios.post('/api/participants', {
+          eventId: this.selectedRow.id,
+          userId: this.userId,
+        });
+        this.participantJoined();
+        console.log('Event created', response.data);
+        alert('Sikeresen csatlakozott az eseményhez!');
+        this.closeCard();
+    } catch (error) {
+        console.error('Error joining event:', error);
+        alert('Hiba a csatlakozás során!');
+      }
     },
   },
 };
