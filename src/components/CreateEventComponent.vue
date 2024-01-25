@@ -31,6 +31,7 @@ export default {
       description: '',
       location: '',
       date: '',
+      participants: '',
       creatorId: ''
     };
   },
@@ -50,11 +51,13 @@ export default {
           description: this.description,
           location: this.location,
           date: this.date,
+          participants: this.participants + 1,
           creatorId: this.creatorId,
         };
 
         const response = await axios.post('/api/events', requestData);
         console.log('Event created', response.data);
+        alert('Sikeresen létrehozta az eseményt!');
 
         this.title = '';
         this.description = '';
