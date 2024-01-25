@@ -39,7 +39,7 @@ export default {
           </q-header>
       <q-drawer v-model="toggleDrawer" elevated side="right">
       <q-tabs inline-tabs vertical>
-        <q-route-tab to="/profile" label="Profil" @click="toggleDrawer = !toggleDrawer" />
+        <q-route-tab to="/profile/personal" label="Profil" @click="toggleDrawer = !toggleDrawer" />
         <q-route-tab
           href="https://vuejs.org/"
           label="Vue.JS"

@@ -41,9 +41,9 @@ export default {
         //Token és User elmentése
         //localStorage.setItem('token', response.data.accessToken);
         //localStorage.setItem('user', JSON.stringify(response.data.user));
-        document.cookie = `token=${response.data.accessToken}; path=/;`;
+        /*document.cookie = `token=${response.data.accessToken}; path=/;`;
         const userJson = JSON.stringify(response.data.user);
-        document.cookie = `user=${userJson}; path=/;`;
+        document.cookie = `user=${userJson}; path=/;`;*/
 
         useAuth.isLoggedIn.value == true;
 

@@ -15,8 +15,31 @@
         :columns="columns"
         row-key="id"
         class="q-mt-md"
+        @row-click="openCard"
       />
   </div>
+
+  <q-dialog v-model="cardVisible">
+  <q-card style="min-width: 500px;;min-height: 100px;">
+    <q-card-section>
+      <div v-if="selectedRow">
+        <h2 class="text-h6 q-mb-md text-center">{{ selectedRow.title }}</h2>
+        <p class="text-body2 q-mb-md">{{ selectedRow.description }}</p>
+        <div class="q-mb-md">
+          <strong>Város:</strong> {{ selectedRow.location }}
+        </div>
+        <div class="q-mb-md">
+          <strong>Dátum:</strong> {{ selectedRow.date }}
+        </div>
+      </div>
+    </q-card-section>
+    <q-card-actions class="q-gutter-sm">
+      <q-btn class="q-col q-ma-md" label="Bezárás" color="red" @click="closeCard" />
+        <q-space />
+      <q-btn class="q-col q-ma-md" label="Csatlakozás" color="green" />
+    </q-card-actions>
+  </q-card>
+</q-dialog>
 </template>
 
 <script>
@@ -36,6 +59,8 @@ export default {
         { name: 'participants', label: 'Résztvevők száma', align: 'left', field: 'participants', sortable: true, headerStyle: 'font-weight: bold; font-size: 16px;' },
         { name: 'date', label: 'Dátum', align: 'left', field: 'date', sortable: true, headerStyle: 'font-weight: bold; font-size: 16px;' },
       ],
+      cardVisible: false,
+      selectedRow: null,
     };
   },
 
@@ -78,6 +103,15 @@ export default {
       this.date = '';
       this.filteredData = [];
       this.searchData();
+    },
+    async openCard(event, row, columnIndex) {
+      console.log('Event clicked',row);
+      this.selectedRow = row;
+      this.cardVisible = true;
+    },
+    closeCard() {
+      this.selectedRow = null;
+      this.cardVisible = false;
     },
   },
 };

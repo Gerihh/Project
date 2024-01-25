@@ -1,12 +1,9 @@
 <template>
   <div class="q-ma-lg">
-    <q-btn label="Új esemény létrehozása" color="green" style="padding: 10px; width: 250px; margin-left: 550px;"/>
+    <q-btn label="Új esemény létrehozása" color="green" style="padding: 10px; width: 250px; margin-left: 550px;" @click="showForm = !showForm"/>
   </div>
 
-<div v-if="user">
-  <h1>{{ user.id }}</h1>
-</div>
-  <div class="absolute-center">
+  <div class="absolute-center" v-if="showForm">
       <q-card square bordered class="q-pa-md shadow-1" style="width: 500px; height: 400px;">
                 <q-form class="q-gutter-md" @submit.prevent="createEvent">
                   <q-input square filled clearable v-model="title" type="title" label="Cím" required/>
@@ -29,6 +26,7 @@ export default {
   name: 'CreateEventComponent',
   data() {
     return {
+      showForm: false,
       title: '',
       description: '',
       location: '',
