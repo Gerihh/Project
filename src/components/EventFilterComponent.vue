@@ -4,7 +4,7 @@
         <q-input v-model="searchTitle" filled clearable type="search" label="Esemény neve" style="width: 300px;"/>
         <q-input v-model="searchCity" clearable label="Város" filled style="width: 250px;"/>
         <q-input v-model.number="model" type="number" filled label="Min. résztvevők" :min="0" style="width: 150px;"/>
-        <q-input v-model="date" type="date" filled label="Dátum"/>
+        <q-input v-model="date" type="date" filled label="Dátum" :min="minDate"/>
         <q-btn @click="searchData" label="Keresés" color="green" style="margin-top: 30px; padding: 10px; width: 150px;"/>
         <q-btn @click="filterReset" label="Szűrők törlése" color="red" style="margin-top: 30px; padding: 10px; width: 150px;"/>
     </div>
@@ -33,6 +33,9 @@
         </div>
         <div class="q-mb-md">
           <strong>Dátum:</strong> {{ selectedRow.date }}
+        </div>
+        <div class="q-mb-md">
+          <strong>Szervező:</strong> {{ creatorName }}
         </div>
       </div>
     </q-card-section>
@@ -66,9 +69,14 @@ export default {
       cardVisible: false,
       selectedRow: null,
       userId: '',
+      creatorName: null,
+      minDate: '',
     };
   },
-
+  mounted() {
+  const today = new Date().toISOString().split('T')[0];
+  this.minDate = today;
+  },
   methods: {
     async searchData() {
       try {
@@ -110,6 +118,7 @@ export default {
       console.log('Event clicked',row);
       this.selectedRow = row;
       this.cardVisible = true;
+      await this.getCreatorName();
     },
     closeCard() {
       this.selectedRow = null;
@@ -143,6 +152,25 @@ export default {
         alert('Hiba a csatlakozás során!');
       }
     },
+    async getCreatorName() {
+      try {
+    if (!this.selectedRow || !this.selectedRow.creatorId) {
+      this.creatorName = null;
+      return;
+    }
+
+    const response = await axios.get(`/api/users/${this.selectedRow.creatorId}`);
+
+    // Assuming the response.data contains the user data
+    const user = response.data;
+
+    // Access the username property
+    this.creatorName = user.username;
+  } catch (error) {
+    console.error('Error fetching creator name:', error);
+    // Handle the error as needed
+  }
+},
   },
 };
 </script>
